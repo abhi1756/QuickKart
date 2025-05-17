@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
+import { useDispatch } from 'react-redux';
+import { addToCar } from '../context/ReduxSlice';
 
 const Product = () => {
 
@@ -11,6 +13,10 @@ const Product = () => {
   const [productData, setProductData] = useState(false);
   const [size, setSize] = useState("")
   const [image, setImage] = useState("")
+
+  // Redux imp
+  const dispatch = useDispatch()
+
 
   const fetchProductData = async () => {
 
@@ -65,7 +71,10 @@ const Product = () => {
               {productData.sizes.map((item, index) => (<button key={index} onClick={() => setSize(item)} className={`border py-2 px-4 bg-gray-100 ${item === size ? "border-orange-500" : ""}`}>{item}</button>))}
             </div>
           </div>
-          <button onClick={() => addToCart(productData._id, size)} className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700'>ADD TO CART</button>
+          <button onClick={() => {
+            // addToCart(productData._id, size)
+            dispatch(addToCar({productData,size}))
+          }} className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700'>ADD TO CART</button>
 
           <hr className='mt-8 sm:w-4/5' />
 

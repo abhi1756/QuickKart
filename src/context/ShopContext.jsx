@@ -2,6 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import { products } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import userSlice from "./ReduxSlice";
+
 
 export const ShopContext = createContext();
 
@@ -22,6 +24,8 @@ const ShopContextProvider = (props) => {
         }
 
         let cartData = structuredClone(cartItems);
+        console.log(cartItems);
+        
 
         if (cartData[itemId]) {
             if (cartData[itemId][size]) {
@@ -44,7 +48,6 @@ const ShopContextProvider = (props) => {
         let cartData = structuredClone(cartItems);
         cartData[itemId][size] = quantity;
         setCartItems(cartData);
-
     }
 
     const getCartCount = () => {
